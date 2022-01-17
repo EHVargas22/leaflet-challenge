@@ -73,6 +73,38 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
 // add tectonic plates to map
 tectonicplates.addTo(myMap);
 
+// create variable to hold earthquakes layer
+let earthquakes = new L.layerGroup();
+
+
+// get earthquake data and populate layergroup
+
+// call the USGS GeoJson API
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+.then(
+    function(earthquakeData){
+
+        // console log to test data load
+        // console.log(earthquakeData);
+
+        // make functiom that determines color of data point
+        function dataColor(depth){
+            if (depth > 90)
+                return "red";
+            else if (depth > 70)
+                return "#fc4903";
+            else if (depth > 50)
+                return "#fc8403";
+            else if (depth > 30)
+                return "#fcad03";
+            else if (depth > 10)
+                return "#cafc03";
+            else
+                return "green";
+        }
+    }
+);
+
 // add the overlay for tectonic plates
 let overlays = {
     "Tectonic Plates": tectonicplates
