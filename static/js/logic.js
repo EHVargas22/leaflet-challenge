@@ -142,10 +142,8 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
                     Depth: <b>${feature.geometry.coordinates[2]}</b><br>
                     Location: <b>${feature.properties.place}</b>`);
              }
-
         }).addTo(earthquakes);
-    }
-);
+    });
 
 // add earthquake layer
 earthquakes.addTo(myMap);
@@ -160,3 +158,27 @@ let overlays = {
 L.control
     .layers(basemaps, overlays)
     .addTo(myMap);
+
+// add legend to map
+let legend = L.control({
+    position: "bottomright"
+});
+
+//add properties for the legend
+legend.onAdd = function(){
+    // make div for the legend in the page
+    let div = L.DomUtil.create("div", "info legend");
+
+    // set intervals
+    let intervals = [-10, 10, 30, 50, 70, 90];
+    //set colors for the intervals
+    let colors = [
+        "green",
+        "#cafc03",
+        "#fcad03",
+        "#fc8403",
+        "#fc4903",
+        "red"        
+    ];
+};
+
