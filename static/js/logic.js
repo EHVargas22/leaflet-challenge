@@ -87,7 +87,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geoj
         // console log to test data load
         // console.log(earthquakeData);
 
-        // make functiom that determines color of data point
+        // make functiom that determines color of data points
         function dataColor(depth){
             if (depth > 90)
                 return "red";
@@ -101,6 +101,14 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geoj
                 return "#cafc03";
             else
                 return "green";
+        }
+        
+        // make function that determines radius of data points 
+        function radiusSize(mag){
+            if (mag == 0)
+                return 1;
+            else
+                return mag * 5; 
         }
     }
 );
