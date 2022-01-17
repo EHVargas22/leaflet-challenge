@@ -80,14 +80,14 @@ let earthquakes = new L.layerGroup();
 // get earthquake data and populate layergroup
 
 // call the USGS GeoJson API
-d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson")
 .then(
     function(earthquakeData){
 
         // console log to test data load
         // console.log(earthquakeData);
 
-        // make functiom that determines color of data points
+        // make function that determines color of data points
         function dataColor(depth){
             if (depth > 90)
                 return "red";
@@ -114,21 +114,41 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geoj
         // add styling to data points
         function dataStyle(feature)
         {
-            return{
-                opacity: 1,
-                fillOpacity: 1,
-                fillColof: dataColor(feature.geometry.coordinates[2]),
+            return {
+                opacity: 0.5,
+                fillOpacity: 0.5,
+                fillColor: dataColor(feature.geometry.coordinates[2]),
                 color: "000000",
                 radius: radiusSize(feature.properties.mag),
-                weight: 0.5
+                weight: 0.5,
+                stroke: true
             }
         }
+
+        // add GeoJson data
+        L.geoJson(earthquakeData, {
+
+             // make each feature a marker on the map
+             pointToLayer: function(feature, latLng) {
+                 return L.circleMarker(latLng);
+             },
+
+             // set the style for each marker
+             style: dataStyle,
+
+             // add popus
+
+        }).addTo(earthquakes);
     }
 );
 
+// add earthquake layer
+earthquakes.addTo(myMap);
+
 // add the overlay for tectonic plates
 let overlays = {
-    "Tectonic Plates": tectonicplates
+    "Tectonic Plates": tectonicplates,
+    "Earthquake Data": earthquakes
 };
 
 // add layer control
