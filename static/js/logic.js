@@ -33,17 +33,17 @@ let topoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
 
 // make basemaps object
 let basemaps = {
-    Default: defaultMap,
     GrayScale: grayscale,
     Watercolor: waterColor,
-    Topography: topoMap
+    Topography: topoMap,
+    Default: defaultMap
 };
 
 // make map object
 var myMap = L.map("map", {
     center: [36.7783, -119.4179],
     zoom: 3,
-    layers: [defaultMap, grayscale, waterColor, topoMap]
+    layers: [grayscale, waterColor, topoMap, defaultMap]
 });
 
 // add default map
@@ -109,6 +109,19 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geoj
                 return 1;
             else
                 return mag * 5; 
+        }
+
+        // add styling to data points
+        function dataStyle(feature)
+        {
+            return{
+                opacity: 1,
+                fillOpacity: 1,
+                fillColof: dataColor(feature.geometry.coordinates[2]),
+                color: "000000",
+                radius: radiusSize(feature.properties.mag),
+                weight: 0.5
+            }
         }
     }
 );
