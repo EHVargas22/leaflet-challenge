@@ -180,5 +180,20 @@ legend.onAdd = function(){
         "#fc4903",
         "red"        
     ];
+
+    // loop through intervals and colors to generate label
+    for(var i = 0; i < intervals.length; i++)
+    {
+        // inner html to set square for each interval and label
+        div.innerHTML += "<i style='background: "
+        + colors[i]
+        + "'></i> "
+        + intervals[i]
+        + (intervals[i + 1] ? "km &ndash; " + intervals[i + 1] + "km <br>" : "+");
+    }
+
+    return div;
 };
 
+// add legend to map
+legend.addTo(myMap);
