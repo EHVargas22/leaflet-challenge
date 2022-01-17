@@ -42,7 +42,7 @@ let basemaps = {
 // make map object
 var myMap = L.map("map", {
     center: [36.7783, -119.4179],
-    zoom: 3,
+    zoom: 5,
     layers: [grayscale, waterColor, topoMap, defaultMap]
 });
 
@@ -137,6 +137,11 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
              style: dataStyle,
 
              // add popus
+             onEachFeature: function(feature, layer){
+                layer.bindPopup(`Magnitude:<b>$${feature.properties.mag}</b><br>
+                    Depth: <b>${feature.geometry.coordinates[2]}</b><br>
+                    Location: <b>${feature.properties.place}</b>`);
+             }
 
         }).addTo(earthquakes);
     }
