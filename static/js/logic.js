@@ -7,13 +7,6 @@ var defaultMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
 
-// make map object
-var myMap = L.map("map", {
-    center: [36.7783, -119.4179],
-    zoom: 3,
-    layers: [defaultMap, grayscale]
-});
-
 // add grayscale layer
 var grayscale = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -23,11 +16,28 @@ var grayscale = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lit
 	ext: 'png'
 });
 
+//watercolor layer
+var waterColor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+	minZoom: 1,
+	maxZoom: 16,
+	ext: 'jpg'
+});
+
 // make basemaps object
 let basemaps = {
     Default: defaultMap,
-    GrayScale: grayscale
+    GrayScale: grayscale,
+    Watercolor: waterColor
 };
+
+// make map object
+var myMap = L.map("map", {
+    center: [36.7783, -119.4179],
+    zoom: 3,
+    layers: [defaultMap, grayscale, waterColor]
+});
 
 // add default map
 defaultMap.addTo(myMap);
