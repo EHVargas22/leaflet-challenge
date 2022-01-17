@@ -49,7 +49,36 @@ var myMap = L.map("map", {
 // add default map
 defaultMap.addTo(myMap);
 
+
+// get data for tectonic plates and draw on the map:
+
+// variable to hold tectonica plate layer
+let tectonicplates = new L.layerGroup();
+
+// call api for tectonic plate info
+d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json")
+.then(function(plateData){
+
+    // console log to ensure data loads
+    // console.log([plateData]);
+
+    // load data using geoJson and add to tectonic plates layer
+    L.geoJson(plateData, {
+        // add styling to visualize lines/boundaries
+        color: "yellow",
+        weight: 1
+    }).addTo(tectonicplates);
+})
+
+// add tectonic plates to map
+tectonicplates.addTo(myMap);
+
+// add the overlay for tectonic plates
+let overlays = {
+    "Tectonic Plates": tectonicplates
+};
+
 // add layer control
 L.control
-    .layers(basemaps)
+    .layers(basemaps, overlays)
     .addTo(myMap);
